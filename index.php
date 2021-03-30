@@ -1,10 +1,11 @@
 <?php 
 
 $patterns = [
-    'username' => "/^[\w_?]{5,20}$/"
-];
+    'username' => "/^[\w_?]{5,20}$/",
+    'contact' => "/^([\d]{11})|([+63\d]{13})$/"
+];  
 
-$messages = ['email' => '', 'username' => ''];
+$messages = ['email' => '', 'username' => '', 'contact' => ''];
 
 // Email Validation
 if (isset($_POST['validate-email'])) {
@@ -57,6 +58,32 @@ if (isset($_POST['validate-username'])) {
 
 }
 // End of Username Validation
+
+// Contact Number Validation
+if (isset($_POST['validate-contact'])) {
+
+    if (empty($_POST['contact'])) {
+
+        $messages['contact'] = 'Please enter a contact number.';
+
+    } else {
+
+        $contact = htmlspecialchars($_POST['contact']);
+
+        if (preg_match($patterns['contact'], $contact)) {
+
+            $messages['contact'] = 'Great the contact number you entered is valid!';
+
+        } else {
+
+            $messages['contact'] = 'Sorry the contact number you entered is invalid. Please try again!';
+
+        }
+
+    }
+
+}
+// End of Contact Number Validation
 
 ?>
 
@@ -128,6 +155,34 @@ if (isset($_POST['validate-username'])) {
             </p>
         <?php } ?>
         <!-- End of Username Validation -->
+
+        <hr>
+
+        <!-- Contact Number Validation -->
+        <section>
+        
+            <form action="index.php" method="POST" id="contact-form">
+            
+                <section>
+                    <label for="contact">Enter a contact number: </label>
+                    <input type="text" name="contact" id="contact">
+                </section>
+
+                <section>
+                    <br>
+                    <button form="contact-form" name="validate-contact">VALIDATE</button>
+                </section>
+            
+            </form>
+
+        </section>
+
+        <?php if (!empty($messages['contact'])) { ?>
+            <p>
+                <?php echo $messages['contact']; ?>
+            </p>
+        <?php } ?>
+        <!-- End of Contact Number Validation -->
     
     </div>
 
