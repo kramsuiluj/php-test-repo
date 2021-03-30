@@ -2,10 +2,11 @@
 
 $patterns = [
     'username' => "/^[\w_?]{5,20}$/",
-    'contact' => "/^([\d]{11})|([+63\d]{13})$/"
+    'contact' => "/^([\d]{11})|([+63\d]{13})$/",
+    'password' => "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/"
 ];  
 
-$messages = ['email' => '', 'username' => '', 'contact' => ''];
+$messages = ['email' => '', 'username' => '', 'contact' => '', 'pass' => ''];
 
 // Email Validation
 if (isset($_POST['validate-email'])) {
@@ -84,6 +85,32 @@ if (isset($_POST['validate-contact'])) {
 
 }
 // End of Contact Number Validation
+
+// Password Validation
+if (isset($_POST['validate-pass'])) {
+
+    if (empty($_POST['pass'])) {
+
+        $messages['pass'] = 'Please enter a password.';
+
+    } else {
+
+        $pass = htmlspecialchars($_POST['pass']);
+
+        if (preg_match($patterns['password'], $pass)) {
+
+            $messages['pass'] = 'Great the password you entered is valid!';
+
+        } else {
+
+            $messages['pass'] = 'Sorry the password you entered is invalid. Please try again!';
+
+        }
+
+    }
+
+}
+// End of Password Validation
 
 ?>
 
@@ -183,6 +210,34 @@ if (isset($_POST['validate-contact'])) {
             </p>
         <?php } ?>
         <!-- End of Contact Number Validation -->
+
+        <hr>
+
+        <!-- Password Validation -->
+        <section>
+        
+            <form action="index.php" method="POST" id="pass-form">
+            
+                <section>
+                    <label for="pass">Enter a password: </label>
+                    <input type="text" name="pass" id="pass">
+                </section>
+
+                <section>
+                    <br>
+                    <button form="pass-form" name="validate-pass">VALIDATE</button>
+                </section>
+            
+            </form>
+            
+        </section>
+
+        <?php if (!empty($messages['pass'])) { ?>
+            <p>
+                <?php echo $messages['pass']; ?>
+            </p>
+        <?php } ?>
+        <!-- End of Password Validation -->
     
     </div>
 
