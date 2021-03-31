@@ -241,5 +241,11 @@ if (isset($_POST['validate-pass'])) {
     
     </div>
 
+    <div>
+    
+        echo md5("password");
+    
+    </div>
+
 </body>
 </html>
