@@ -22,7 +22,7 @@ $password = 'password';
 
 $start = microtime(true);
 
-echo password_hash($password, PASSWORD_DEFAULT, ['cost' => 10]);
+echo password_hash($password, PASSWORD_DEFAULT, ['cost' => 10   ]);
 
 $end = microtime(true);
 
